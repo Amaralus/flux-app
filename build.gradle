@@ -2,23 +2,57 @@
 plugins {
     id 'java'
     id 'groovy'
-    id 'application'
+    id 'org.springframework.boot' version '2.5.9'
+    id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+}
+
+group = 'amaralus.apps'
+version = '0.1'
+sourceCompatibility = '11'
+
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
 }
 
 repositories {
     mavenCentral()
 }
 
-dependencies {
-    testImplementation 'org.codehaus.groovy:groovy:3.0.8'
+ext {
+    set('springCloudVersion', "2020.0.5")
+}
 
+dependencyManagement {
+    imports {
+        mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+    }
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-data-mongodb-reactive'
+    implementation 'org.springframework.boot:spring-boot-starter-integration'
+    implementation 'org.springframework.boot:spring-boot-starter-quartz'
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+    implementation 'org.springframework.boot:spring-boot-starter-webflux'
+    implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
+    implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
+    implementation 'org.springframework.integration:spring-integration-jpa'
+    implementation 'org.springframework.integration:spring-integration-mongodb'
+    implementation 'org.springframework.integration:spring-integration-webflux'
+    compileOnly 'org.projectlombok:lombok'
+    runtimeOnly 'org.postgresql:postgresql'
+    annotationProcessor 'org.projectlombok:lombok'
+
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'io.projectreactor:reactor-test'
+    testImplementation 'org.springframework.integration:spring-integration-test'
+    testImplementation 'org.codehaus.groovy:groovy:3.0.8'
     testImplementation 'org.spockframework:spock-core:2.0-groovy-3.0'
     testImplementation 'junit:junit:4.13.2'
 
-}
-
-application {
-    mainClass = 'flux.app.App'
 }
 
 test {

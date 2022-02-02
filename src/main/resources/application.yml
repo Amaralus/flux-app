@@ -1,0 +1,10 @@
+spring:
+  cloud:
+    discovery:
+      enabled: false
+  datasource:
+    url: jdbc:postgresql://localhost:5432/postgres
+    username: postgres
+    password: postgres
+server:
+  port: 10000
