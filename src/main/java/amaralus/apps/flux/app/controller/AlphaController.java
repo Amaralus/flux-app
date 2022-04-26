@@ -1,10 +1,12 @@
 package amaralus.apps.flux.app.controller;
 
 import amaralus.apps.flux.app.model.Alpha;
+import amaralus.apps.flux.app.model.ParamDto;
 import amaralus.apps.flux.app.service.AlphaService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -37,5 +39,10 @@ public class AlphaController {
     public Mono<Alpha> getAlphaOverProxy() {
         log.info("over proxy");
         return alphaService.overProxy();
+    }
+
+    @GetMapping("params")
+    public void params(@ModelAttribute ParamDto paramDto) {
+        log.info("{}", paramDto);
     }
 }
