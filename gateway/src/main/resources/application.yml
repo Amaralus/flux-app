@@ -1,25 +1,41 @@
 eureka:
   client:
-    serviceUrl:
-      defaultZone: http://localhost:8761/eureka/
+    serviceUrl.defaultZone: http://localhost:8761/eureka/
+    registry-fetch-interval-seconds: 10
+
 spring:
   application:
     name: 'gateway'
   main:
     allow-bean-definition-overriding: true
+
+  cloud:
+    gateway:
+      routes:
+        - id: flux-app
+          uri: lb://flux-app
+          predicates:
+            - Path=/**
+          filters:
+            - RemoveRequestHeader=Cookie
+      default-filters:
+        - TokenRelay
+
   security:
     oauth2:
       client:
         provider:
           keycloak:
-            issuer-uri: http://localhost:8080/auth/realms/test-realm
+            token-uri: http://localhost:8080/auth/realms/test-realm/protocol/openid-connect/token
+            authorization-uri: http://localhost:8080/auth/realms/test-realm/protocol/openid-connect/auth
+            userinfo-uri: http://localhost:8080/auth/realms/test-realm/protocol/openid-connect/userinfo
+            user-name-attribute: preferred_username
         registration:
           keycloak:
             client-id: flux-app
-            client-secret: 583a5ccf-e582-44f3-bf31-8f623c7ecb34
+            client-secret: a44e6cff-08e5-4c60-b460-fdcfb551bd04
             authorization-grant-type: authorization_code
-            redirect-uri: http://localhost:10000/login/oauth2/code/fluxapp
-            scope: openid, profile
+            redirect-uri: "{baseUrl}/login/oauth2/code/flux-app"
 
 server:
   port: 11111

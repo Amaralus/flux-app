@@ -11,19 +11,12 @@ spring:
     url: jdbc:postgresql://localhost:5432/postgres
     username: postgres
     password: postgres
+
   security:
     oauth2:
-      client:
-        provider:
-          keycloak:
-            issuer-uri: http://localhost:8080/auth/realms/test-realm
-        registration:
-          keycloak:
-            client-id: flux-app
-            client-secret: 583a5ccf-e582-44f3-bf31-8f623c7ecb34
-            authorization-grant-type: authorization_code
-            redirect-uri: http://localhost:10000/login/oauth2/code/fluxapp
-            scope: openid, profile
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:8080/auth/realms/test-realm
 
 server:
   port: 10000

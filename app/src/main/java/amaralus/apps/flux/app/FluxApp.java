@@ -6,9 +6,9 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 
 @EnableDiscoveryClient
 @SpringBootApplication
-public class Application {
+public class FluxApp {
 
     public static void main(String[] args) {
-        SpringApplication.run(Application.class);
+        SpringApplication.run(FluxApp.class);
     }
 }

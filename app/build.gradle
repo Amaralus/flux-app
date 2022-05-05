@@ -29,6 +29,6 @@ dependencies {
     testImplementation 'junit:junit:4.13.2'
 }
 
-test {
-    useJUnitPlatform()
-}
+//test {
+//    useJUnitPlatform()
+//}
